@@ -184,7 +184,13 @@ If the network does not work correctly, check the following:
 
 ## Conclusion
 
-This project demonstrates how Cisco Packet Tracer can be used to design, configure, and test a simulated computer network. The documentation helps explain the network topology, addressing scheme, device configuration, and testing process.
+This project successfully demonstrates the implementation of a structured and secure enterprise network using Cisco Packet Tracer. The network was designed using VLAN segmentation to separate departments such as Management, Finance, HR, IT, Staff, Guest, and Server networks. Inter-VLAN routing was configured using router-on-a-stick, allowing controlled communication between VLANs through router subinterfaces.
+
+DHCP services were configured to automatically assign IP addresses to end devices in each VLAN, while the internal server was configured with a static IP address to provide consistent access to the web portal and DNS services. Trunk links were also implemented to carry multiple VLANs between network devices.
+
+Security was applied through SSH remote access and Access Control Lists (ACLs). SSH was configured to allow secure router management, while ACLs were used to restrict access between specific VLANs. Some ping tests failed intentionally because traffic was blocked by ACL rules. These failed results show that the security policy was working as expected, not that the network was misconfigured.
+
+Overall, this project shows the use of VLANs, trunking, inter-VLAN routing, DHCP, SSH, ACLs, and connectivity testing in a simulated enterprise environment. The final result proves that the network can provide proper connectivity while also enforcing access restrictions to improve internal network security.
 
 ## Author
 
