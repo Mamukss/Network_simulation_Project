@@ -41,7 +41,6 @@ The objectives of this project are:
     └── testing-results.md
 ```
 
-> Note: The `docs/` folder can be used to store screenshots, IP addressing tables, and testing evidence.
 
 ## Network Topology
 
@@ -53,56 +52,42 @@ The network topology is created inside Cisco Packet Tracer. The topology may inc
 - Server devices
 - Wired connections using Ethernet cables
 
-Add a screenshot of your topology here:
-
 
 ![Network](docs/Topology.png)
 
 
 ## IP Addressing Table
 
-Use the table below to document the IP addresses used in the project.
 
-| Device Name | Interface | IP Address | Subnet Mask | Default Gateway | Description |
-|---|---|---:|---:|---:|---|
-| PC0 | FastEthernet0 | `192.168.x.x` | `255.255.255.0` | `192.168.x.1` | End device |
-| PC1 | FastEthernet0 | `192.168.x.x` | `255.255.255.0` | `192.168.x.1` | End device |
-| Switch0 | VLAN 1 | `192.168.x.x` | `255.255.255.0` | `192.168.x.1` | Management IP |
-| Router0 | GigabitEthernet0/0 | `192.168.x.1` | `255.255.255.0` | `-` | Gateway |
+| VLAN ID | VLAN Name | Network Address | Subnet Mask | Default Gateway | DHCP Range | DNS Server | Description |
+|---|---|---|---|---|---|---|---|
+| 10 | MANAGEMENT | 10.10.10.0/24 | 255.255.255.0 | 10.10.10.1 | 10.10.10.21 - 10.10.10.254 | 10.10.70.10 | Management VLAN |
+| 20 | FINANCE | 10.10.20.0/24 | 255.255.255.0 | 10.10.20.1 | 10.10.20.21 - 10.10.20.254 | 10.10.70.10 | Finance department |
+| 30 | HR | 10.10.30.0/24 | 255.255.255.0 | 10.10.30.1 | 10.10.30.21 - 10.10.30.254 | 10.10.70.10 | Human Resources department |
+| 40 | IT | 10.10.40.0/24 | 255.255.255.0 | 10.10.40.1 | 10.10.40.21 - 10.10.40.254 | 10.10.70.10 | IT department |
+| 50 | STAFF | 10.10.50.0/24 | 255.255.255.0 | 10.10.50.1 | 10.10.50.21 - 10.10.50.254 | 10.10.70.10 | Staff users |
+| 60 | GUEST | 10.10.60.0/24 | 255.255.255.0 | 10.10.60.1 | 10.10.60.21 - 10.10.60.254 | 10.10.70.10 | Guest users |
+| 70 | SERVER | 10.10.70.0/24 | 255.255.255.0 | 10.10.70.1 | 10.10.70.21 - 10.10.70.254 | 10.10.70.10 | Server VLAN |
+| 99 | NET-MGMT | 10.10.99.0/24 | 255.255.255.0 | 10.10.99.1 | Not configured / not shown | - | Network management VLAN |
+| 999 | BLACKHOLE-NATIVE | - | - | - | - | - | Native VLAN for trunk security |
 
-> Replace the example values with the actual IP addresses from your Packet Tracer project.
 
-## Device Configuration Summary
-
-Document the main configuration applied to each network device.
 
 ### Router Configuration
+for router configuration you can see on the file 
 
-Example configuration:
-
-```bash
-enable
-configure terminal
-hostname Router0
-interface gigabitEthernet0/0
-ip address 192.168.1.1 255.255.255.0
-no shutdown
-exit
+```text
+config/router1_config
 ```
-
 ### Switch Configuration
 
 Example configuration:
 
-```bash
-enable
-configure terminal
-hostname Switch0
-interface vlan 1
-ip address 192.168.1.2 255.255.255.0
-no shutdown
-exit
-ip default-gateway 192.168.1.1
+for router configuration you can see on the file 
+
+```text
+config/switch1_config
+config/Switch2_config
 ```
 
 ### PC Configuration
@@ -113,6 +98,8 @@ Each PC should be configured with:
 - Subnet mask
 - Default gateway
 - DNS server, if required
+
+all automaticly implement using dhcp except for the server ip address
 
 ## Features Implemented
 
@@ -125,17 +112,13 @@ Update this section based on your actual project configuration.
 - End-device connectivity
 - Ping testing
 
-Optional features if used:
+## Security Policy and ACL Testing
 
-- VLAN configuration
-- Inter-VLAN routing
-- DHCP configuration
-- Static routing
-- Dynamic routing
-- NAT
-- Access Control List \(ACL\)
-- Server services such as DNS, DHCP, HTTP, or FTP
+Access Control Lists (ACLs) were implemented to restrict communication between VLANs. Some VLANs are intentionally blocked from accessing other internal VLANs to improve network security.
 
+For example, the Guest VLAN is not allowed to access internal department VLANs such as Management, Finance, HR, IT, Staff, and Network Management. However, it is still allowed to access the internal web server at 10.10.70.10.
+
+The failed ping results shown in the testing section are expected because the traffic is blocked by ACL rules, not because of a network misconfiguration.
 ## Testing and Verification
 
 Testing should be performed to ensure the network works correctly.
@@ -147,8 +130,8 @@ Use the `ping` command from one device to another.
 Example:
 
 ```bash
-ping 192.168.1.1
-ping 192.168.1.2
+ping 10.10.10.21
+ping 10.10.20.22
 ```
 
 ### Verification Commands
@@ -165,11 +148,14 @@ show mac address-table
 
 ## Testing Results
 
-| Test Case | Source Device | Destination Device | Expected Result | Actual Result | Status |
-|---|---|---|---|---|---|
-| Ping gateway | PC0 | Router0 | Success | Success | Passed |
-| Ping between PCs | PC0 | PC1 | Success | Success | Passed |
-| Check interface status | Router0 | - | Interface up | Interface up | Passed |
+| Test | Source | Destination | Result | Explanation |
+|---|---|---|---|---|
+| Ping Guest to Management | VLAN 60 | 10.10.10.21 | Failed | Blocked by ACL |
+| Ping Guest to Finance | VLAN 60 | 10.10.20.21 | Failed | Blocked by ACL |
+| Ping Guest to HR | VLAN 60 | 10.10.30.21 | Failed | Blocked by ACL |
+| Ping Staff to Finance | VLAN 50 | 10.10.20.21 | Failed | Blocked by ACL |
+| Ping Staff to HR | VLAN 50 | 10.10.30.22 | Failed | Blocked by ACL |
+| Web Access to Server | VLAN 50 / VLAN 60 | 10.10.70.10 | Success | HTTP access is allowed |
 
 ## How to Open the Project
 
