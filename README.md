@@ -56,7 +56,7 @@ The network topology is created inside Cisco Packet Tracer. The topology may inc
 Add a screenshot of your topology here:
 
 ```md
-![Network Topology](docs/topology.png)
+![Network_simulation_project](docs/Topology.png)
 ```
 
 ## IP Addressing Table
