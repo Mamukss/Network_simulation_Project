@@ -1,0 +1,151 @@
+Building configuration...
+
+Current configuration : 2633 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW2
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/2
+ description PC-HR
+ switchport access vlan 30
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+!
+interface FastEthernet0/3
+ description PC-STAFF
+ switchport access vlan 50
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+!
+interface FastEthernet0/4
+ description PC-GUEST
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+!
+interface FastEthernet0/5
+ description PC-GUEST2
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky 
+!
+interface FastEthernet0/6
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/7
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/8
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/9
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/10
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/11
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/12
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/13
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/14
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/15
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/16
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/17
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/18
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/19
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/20
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/21
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/22
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/23
+ description UNUSED_PORT_DISABLED
+ shutdown
+!
+interface FastEthernet0/24
+ description TRUNK_TO_SW1
+ switchport trunk native vlan 999
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99,999
+ switchport mode trunk
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login
+line vty 5 15
+ login
+!
+!
+!
+!
+end
