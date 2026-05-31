@@ -202,7 +202,7 @@ This project demonstrates how Cisco Packet Tracer can be used to design, configu
 
 ## Author
 
-**Delia Aulia**  
+Yohanes Marcel Krisna Mukti Wibowo
 Informatics Student
 
 ## License
